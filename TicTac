@@ -1,0 +1,261 @@
+import java.util.*;
+public class Test {
+    static Scanner scanner = new Scanner(System.in);
+    static String player1, player2;
+    static boolean checkPosition = false;
+    static int player1Count = 0, player2Count = 0;
+    static boolean filled = false;
+    static int empty = 0;
+
+
+    static String [][] board = new String[3][3];
+    public static void main(String [] args)
+    {
+        createBoard(board);
+        displayBoard(board);
+        assignXO(board);
+        winAxis(board);
+    }
+
+    public static void createBoard(String [][] board)
+    {
+        for (int row = 0; row < board.length; row++)
+        {
+            for (int col = 0; col < board[0].length; col++)
+            {
+                board[row][col] = "-";
+            }
+            System.out.println();
+        }
+    }
+
+    public static void displayBoard(String [][] board)
+    {
+        for (int row = 0; row < board.length; row++)
+        {
+            for (int col = 0; col < board[0].length; col++)
+            {
+                System.out.print(board[row][col]);
+            }
+            System.out.println();
+        }
+    }
+
+    public static void player1AssignX(String [][] board)
+    {
+            System.out.println("Players take turns");
+            System.out.println("Player 1 turn!");
+            //player1 = scanner.next();
+            System.out.print("Enter the ROW for your input[0-2]: ");
+            int row = scanner.nextInt();
+            while (row > 3 || row < 0) {
+                System.out.print("Enter a valid ROW for your input: ");
+                row = scanner.nextInt();
+            }
+            System.out.print("Enter the COLUMN for your input[0-2]: ");
+            int col = scanner.nextInt();
+            while (col > 3 || col < 0) {
+                System.out.print("Enter a valid COLUMN for your input: ");
+                col = scanner.nextInt();
+            }
+            if (!(board[row][col] == "-"))
+            {
+                System.out.println("There is a value in that position! Try again! ");
+                System.out.print("Enter a valid ROW for your input: ");
+                row = scanner.nextInt();
+                System.out.print("Enter a valid COLUMN for your input: ");
+                col = scanner.nextInt();
+            }
+            board[row][col] = "X";
+            player1 = board[row][col];
+            player1Count++;
+            empty++;
+
+    }
+
+    public static void player2AssignO(String [][] board)
+    {
+        System.out.println("Players take turns");
+        System.out.println("Player 2 turn!");
+        System.out.print("Enter the ROW for your input[0-2]: ");
+        int row = scanner.nextInt();
+        while (row > 3 || row < 0) {
+            System.out.print("Enter a valid ROW for your input: ");
+            row = scanner.nextInt();
+        }
+        System.out.print("Enter the COLUMN for your input[0-2]: ");
+        int col = scanner.nextInt();
+        while (col > 3 || col < 0) {
+            System.out.print("Enter a valid COLUMN for your input: ");
+            col = scanner.nextInt();
+        }
+        if (!(board[row][col] == "-"))
+        {
+            System.out.println("There is a value in that position! Try again! ");
+            System.out.print("Enter a valid ROW for your input: ");
+            row = scanner.nextInt();
+            System.out.print("Enter a valid COLUMN for your input: ");
+            col = scanner.nextInt();
+        }
+        board[row][col] = "O";
+        player2 = board[row][col];
+        player2Count++;
+        empty++;
+    }
+
+    //Checks if board is full
+    public static void exitBoard()
+    {
+        System.out.println("Board available positions: " + (board.length * 3));
+        System.out.println("Board positions(s) filled: " + empty);
+        if (empty == (board.length * 3))
+        {
+            System.out.println("Board Status: " + "Full");
+            System.out.println("The game is a draw");
+            System.exit(0);
+        }
+    }
+
+    public static void assignXO (String [][] board)
+    {
+        while (!(empty == (board.length * 3)))
+        {
+            exitBoard();
+            player1AssignX(board);
+            displayBoard(board);
+            winAxis(board);
+            exitBoard();
+            player2AssignO(board);
+            displayBoard(board);
+            winAxis(board);
+        }
+
+    }
+
+    //The Winning axis => temporary storage for possible winning diagonals
+    public static void winAxis(String [][] board)
+    {
+        if ((board[0][0] == "X") && ((board[0][1]) == "X") && (board[0][2] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][0] == "O") && ((board[0][1]) == "O") && (board[0][2] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[1][0] == "X") && ((board[1][1]) == "X") && (board[1][2] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[1][0] == "O") && ((board[1][1]) == "O") && (board[1][2] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+
+        if ((board[2][0] == "X") && ((board[2][1]) == "X") && (board[2][2] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[2][0] == "O") && ((board[2][1]) == "O") && (board[2][2] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        //--------------------------------------------------------------------------
+
+        if ((board[0][0] == "X") && ((board[1][0]) == "X") && (board[2][0] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][0] == "O") && ((board[1][0]) == "0") && (board[2][0] == "0"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][1] == "X") && ((board[1][1]) == "X") && (board[2][1] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][1] == "O") && ((board[1][1]) == "O") && (board[2][1] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][2] == "X") && ((board[1][2]) == "X") && (board[2][2] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][2] == "O") && ((board[1][2]) == "O") && (board[2][2] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+
+        //------------------------------------------------------------------------------
+        if ((board[0][0] == "X") && ((board[1][1]) == "X") && (board[2][2] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][0] == "O") && ((board[1][1]) == "O") && (board[2][2] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+
+        //--------------------------------------------------------------------------------
+        if ((board[0][2] == "X") && ((board[1][1]) == "X") && (board[2][0] == "X"))
+        {
+            System.out.println("Player 1 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+        if ((board[0][2] == "O") && ((board[1][1]) == "O") && (board[2][0] == "O"))
+        {
+            System.out.println("Player 2 wins");
+            displayBoard(board);
+            System.exit(0);
+        }
+
+    }
+
+    //Checks if value have not been assigned to each position in a board
+    public static boolean notFilled()
+    {
+
+        System.out.println("Empty check: " + empty);
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if ((board[row][col] == "-"))
+                    return checkPosition = false;
+            }
+            if (board[row].length == empty) {
+                System.out.println("Board is full.");
+                break;
+            }
+        }
+        return (checkPosition = true);
+    }
+}
